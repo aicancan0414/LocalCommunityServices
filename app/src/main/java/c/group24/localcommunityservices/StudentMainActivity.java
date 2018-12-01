@@ -38,7 +38,8 @@ public class StudentMainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Instantiate the opportunity fragment
-        //fragment = new OpportunityFragment();
+        fragment = new OpportunityFragment();
+        //fragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
 
@@ -100,13 +101,15 @@ public class StudentMainActivity extends AppCompatActivity
             settingsMenuItem.setVisible(false);
             MenuItem ediMenuItem = menu.findItem(R.id.editProfile);
             ediMenuItem.setVisible(true);
+            setTitle("Profile");
             //getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
         } else if (id == R.id.nav_pastevents) {
 
 
         } else if(id == R.id.nav_futureevents) {
-            //fragment = new OpportunityFragment();
+            fragment = new OpportunityFragment();
+            setTitle("Opportunities");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         }
 
