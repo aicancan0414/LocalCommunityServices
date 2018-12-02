@@ -19,6 +19,7 @@
     <string name="ops_rating">Rating</string>
     <string name="ops_feedback">Feedback</string>
     <string name="enter_feedback">Enter Feedback</string>
+    <string name="submit">Submit</string>
     <string name="title_activity_student_main">StudentMainActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

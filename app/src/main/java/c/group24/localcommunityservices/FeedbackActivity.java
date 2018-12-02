@@ -26,7 +26,7 @@ public class FeedbackActivity extends AppCompatActivity {
         mFeedbackRating = findViewById(R.id.opsRating);
         mFeedbackText = findViewById(R.id.opsFeedback);
 
-        final Button createButton = findViewById(R.id.createButton);
+        final Button createButton = findViewById(R.id.submitButton);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
