@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,15 +60,21 @@ public class EditProfileFragment extends Fragment{
         past_activities = view.findViewById(R.id.user_activities);
         save = view.findViewById(R.id.save_button);
 
-        databaseReference.child(userID).addValueEventListener(new ValueEventListener() {
+
+        databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot ds) {
-                Map<String, String> map = (Map<String, String>) ds.getValue();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("Test", "loading data");
+                Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
                 name = map.get("Name");
                 age = map.get("Age");
+                phone = map.get("Phone Number");
                 email = map.get("Email");
                 work = map.get("Work");
-                phone = map.get("Phone Number");
+
+                Log.d("Test", name);
+
+                setViewEditable();
             }
 
             @Override
@@ -75,7 +82,6 @@ public class EditProfileFragment extends Fragment{
             }
         });
 
-        setViewEdit();
 
         save.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +99,7 @@ public class EditProfileFragment extends Fragment{
         return view;
     }
 
-    private void setViewEdit() {
+    private void setViewEditable() {
 
         //Hide all activities
         past_activities.setVisibility(View.GONE);
@@ -104,30 +110,32 @@ public class EditProfileFragment extends Fragment{
         nameView.setFocusable(true);
         nameView.setClickable(true);
         nameView.setInputType(InputType.TYPE_CLASS_TEXT);
-        nameView.setText(name);
 
         ageView.setVisibility(View.VISIBLE);
         ageView.setFocusable(true);
         ageView.setClickable(true);
         ageView.setInputType(InputType.TYPE_CLASS_NUMBER);
-        ageView.setText(age);
 
         workView.setVisibility(View.VISIBLE);
         workView.setFocusable(true);
         workView.setClickable(true);
         workView.setInputType(InputType.TYPE_CLASS_TEXT);
-        workView.setText(work);
 
         phoneView.setVisibility(View.VISIBLE);
         phoneView.setFocusable(true);
         phoneView.setClickable(true);
         phoneView.setInputType(InputType.TYPE_CLASS_PHONE);
-        phoneView.setText(phone);
 
         emailView.setVisibility(View.VISIBLE);
         emailView.setFocusable(true);
         emailView.setClickable(true);
         emailView.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+
+        // Set the editText with its original info
+        nameView.setText(name);
+        ageView.setText(age);
+        workView.setText(work);
+        phoneView.setText(phone);
         emailView.setText(email);
     }
 
