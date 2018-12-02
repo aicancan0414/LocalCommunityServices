@@ -44,6 +44,8 @@ public class EmailVerificatiion extends Activity{
                         database.child(identity).child(uid).child("Number of Volunteers").setValue("");
                         database.child(identity).child(uid).child("Description").setValue("");
                         database.child(identity).child(uid).child("Feedback").setValue("");
+                        database.child(identity).child(uid).child("Address").setValue("");
+                        database.child(identity).child(uid).child("Rating").setValue("");
                     }
                     Toast.makeText(EmailVerificatiion.this, "Email Verification successful", Toast.LENGTH_LONG).show();
                     Intent log = new Intent(EmailVerificatiion.this, Login.class);
