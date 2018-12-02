@@ -82,6 +82,8 @@ public class StudentMainActivity extends AppCompatActivity
             return true;
         }
         if(id == R.id.editProfile) {
+            fragment = new EditProfileFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             return true;
         }
 

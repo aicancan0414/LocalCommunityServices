@@ -76,6 +76,8 @@ public class ProfileFragment extends Fragment {
             nameView.setText(map.get("Name"));
             ageView.setText(map.get("Age"));
             emailView.setText(map.get("Email"));
+            workView.setText(map.get("Work"));
+            phoneView.setText(map.get("Phone Number"));
         }
 
         // hide all views that are empty
