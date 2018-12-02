@@ -60,13 +60,14 @@ public class Login extends Activity {
                                     }else{
                                         Intent goToOrg = new Intent();
                                     }
-                                    } else if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
+                                }
+                                else if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
                                     Intent goVerify = new Intent(Login.this,EmailVerificatiion.class);
                                     startActivity(goVerify);
-                                    }else{
+                                }
+                                else{
                                     Log.e("ERROR", task.getException().toString());
                                     Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
                                 }
                             }
                         });

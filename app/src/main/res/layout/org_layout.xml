@@ -83,11 +83,19 @@
                 android:textSize="12dp"/>
 
 
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:layout_marginTop="30dp"
+                android:visibility="gone"/>
+
             <LinearLayout
                 android:id="@+id/to_hide_feedback"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_marginTop="20dp">
 
                 <EditText
@@ -96,18 +104,19 @@
                     android:inputType="none"
                     android:editable="false"
                     android:background="@android:color/transparent"
-                    android:text="Feedback"
+                    android:text="User's Rating"
                     android:textSize="20dp"
                     android:layout_marginLeft="10dp"/>
 
                 <RatingBar
                     android:id="@+id/ratingBar"
                     style="?android:attr/ratingBarStyleSmall"
-                    android:progressTint="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="5dp"
                     android:numStars="5"
+                    android:progressTint="@color/colorPrimary"
                     android:rating="5" />
 
             </LinearLayout>

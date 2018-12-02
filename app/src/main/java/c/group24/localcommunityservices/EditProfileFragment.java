@@ -1,5 +1,9 @@
 package c.group24.localcommunityservices;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,12 +12,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.support.v4.app.Fragment;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -21,8 +28,17 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.StorageTask;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Map;
+import java.io.*;
+import android.graphics.*;
+import android.widget.Toast;
+import android.content.*;
+import android.provider.MediaStore;
 
 public class EditProfileFragment extends Fragment{
 
@@ -31,13 +47,17 @@ public class EditProfileFragment extends Fragment{
     private EditText nameView, ageView, workView, phoneView, emailView;
     private Button save;
     private LinearLayout past_activities;
+    private final int RESULT_LOAD_IMG = 1;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private FirebaseAuth firebaseAuth;
     private FirebaseUser user;
-    private String name, age, work, phone, email;
+    private String name, age, work, phone, email, imgName;
     private String userID;
+    private Uri mImageUri;
+    private StorageReference mStorageRef;
+    private StorageTask mUploadTask;
 
     @Nullable
     @Override
@@ -61,6 +81,7 @@ public class EditProfileFragment extends Fragment{
         save = view.findViewById(R.id.save_button);
 
 
+
         databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -71,6 +92,7 @@ public class EditProfileFragment extends Fragment{
                 phone = map.get("Phone Number");
                 email = map.get("Email");
                 work = map.get("Work");
+                imgName = map.get("Profile Pic");
 
                 Log.d("Test", name);
 
@@ -83,6 +105,15 @@ public class EditProfileFragment extends Fragment{
         });
 
 
+        /*
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFileChooser();
+            }
+        });
+        */
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +123,8 @@ public class EditProfileFragment extends Fragment{
                 databaseReference.child(userID).child("Phone Number").setValue(phoneView.getText().toString());
                 databaseReference.child(userID).child("Work").setValue(workView.getText().toString());
                 databaseReference.child(userID).child("Email").setValue(emailView.getText().toString());
+                //databaseReference.child(userID).child("Profile Pic").setValue(imgName);
+                //uploadImg(mImageUri);
 
             }
         });
@@ -131,6 +164,9 @@ public class EditProfileFragment extends Fragment{
         emailView.setClickable(true);
         emailView.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
 
+        //imageView.setClickable(true);
+        //imageView.setFocusable(true);
+
         // Set the editText with its original info
         nameView.setText(name);
         ageView.setText(age);
@@ -162,5 +198,84 @@ public class EditProfileFragment extends Fragment{
         emailView.setInputType(InputType.TYPE_NULL);
 
         save.setVisibility(View.GONE);
+
+        if (nameView.getText().toString().equals(""))
+            nameView.setVisibility(View.GONE);
+        if (ageView.getText().toString().equals(""))
+            ageView.setVisibility(View.GONE);
+        if (emailView.getText().toString().equals(""))
+            emailView.setVisibility(View.GONE);
+        if (workView.getText().toString().equals(""))
+            workView.setVisibility(View.GONE);
+        if (phoneView.getText().toString().equals(""))
+            phoneView.setVisibility(View.GONE);
+
+        // check if user have past activities
+        int childCount = past_activities.getChildCount();
+        if (childCount == 1)
+            past_activities.setVisibility(View.GONE);
     }
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_PICK);
+        startActivityForResult(intent, RESULT_LOAD_IMG);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            try {
+                mImageUri = data.getData();
+                final InputStream imageStream = getActivity().getContentResolver().openInputStream(mImageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                imageView.setImageBitmap(selectedImage);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                Toast.makeText(getContext(), "Something went wrong", Toast.LENGTH_LONG).show();
+            }
+
+        }else {
+            Toast.makeText(getContext(), "You haven't picked Image",Toast.LENGTH_LONG).show();
+        }
+
+    }
+
+    private void uploadImg(Uri image) {
+        if (imgName.equals(null))
+            imgName = System.currentTimeMillis() + "";
+
+        StorageReference fileRef = mStorageRef.child(imgName + "." + getFileExtension(mImageUri));
+        mUploadTask = fileRef.putFile(image).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(getContext(), "Upload Successful", Toast.LENGTH_LONG).show();
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Upload Failed", Toast.LENGTH_LONG).show();
+            }
+        });
+
+    }
+
+    private Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    private String getFileExtension(Uri uri) {
+        ContentResolver cR = getActivity().getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
 }
