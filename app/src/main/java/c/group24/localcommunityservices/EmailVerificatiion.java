@@ -38,8 +38,8 @@ public class EmailVerificatiion extends Activity{
                     database.child(identity).child(uid).child("Email").setValue(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                     if(identity.equals("Student")) {
                         database.child(identity).child(uid).child("Age").setValue("");
-                        database.child(identity).child(uid).child("Total Hours").setValue("");
-                        database.child(identity).child(uid).child("Past Volunteer Work").setValue("");
+                        database.child(identity).child(uid).child("Work").setValue("");
+                        database.child(identity).child(uid).child("Phone Number").setValue("");
                     }else{
                         database.child(identity).child(uid).child("Number of Volunteers").setValue("");
                         database.child(identity).child(uid).child("Description").setValue("");
