@@ -22,6 +22,8 @@ import android.view.MenuItem;
 import android.view.Menu;
 import android.view.MenuInflater;
 
+import java.util.List;
+
 import java.util.ArrayList;
 
 
@@ -119,6 +121,10 @@ public class OpportunityFragment extends Fragment {
         });*/
 
         return view;
+    }
+
+    public List<OpportunityListItem> getAllOpportunities() {
+        return list;
     }
 
 }
