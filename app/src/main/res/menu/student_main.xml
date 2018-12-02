@@ -15,4 +15,12 @@
         android:title="Edit Profile"
         android:visible="false"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_search"
+        android:orderInCategory="100"
+        android:title="Search"
+        android:visible="false"
+        app:showAsAction="always"
+        app:actionViewClass="android.widget.SearchView" />
 </menu>
