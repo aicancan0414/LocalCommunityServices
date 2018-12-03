@@ -80,7 +80,7 @@ public class StudentDescription extends Activity {
         viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentDescription.this, OrgProfileFragment.class);
+                Intent intent = new Intent(StudentDescription.this, OrgProfileActivity.class);
                 intent.putExtra("uid", orgID);
                 startActivity(intent);
             }
