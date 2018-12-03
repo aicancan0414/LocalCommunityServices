@@ -43,6 +43,8 @@
             android:name=".StudentMainActivity"
             android:label="@string/title_activity_student_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+
     </application>
 
 </manifest>

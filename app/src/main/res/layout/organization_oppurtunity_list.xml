@@ -32,8 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="124dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/button_3"
-        android:text="@string/orgOppPost"
+        android:background= "@drawable/button_3"
+        android:text="button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 

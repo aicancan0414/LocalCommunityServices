@@ -1,6 +1,7 @@
 package c.group24.localcommunityservices;
 
 
+import android.app.SearchManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,8 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import android.view.MenuItem;
 import android.view.Menu;
 import android.view.MenuInflater;
-
-import java.util.List;
+import android.widget.SearchView;
 
 import java.util.ArrayList;
 
@@ -30,21 +30,24 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class OpportunityFragment extends Fragment {
+public class OpportunityFragment extends Fragment implements SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mDatabaseRef;
     private ArrayList<OpportunityListItem> list = new ArrayList<>();
+    private SearchView searchView;
     //private Menu menuRef;
 
 
 
     public OpportunityFragment() {
         // Required empty public constructor
-        // setHasOptionsMenu(true);
     }
+
+
+
 
 
     @Override
@@ -54,8 +57,6 @@ public class OpportunityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_opportunity, container, false);
 
-        //junk items (for right now) for list.
-        //String[] items = {"Do something", "Do something else", "Another thing"};
 
         mRecyclerView = view.findViewById(R.id.oppsRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -64,6 +65,9 @@ public class OpportunityFragment extends Fragment {
         mAdapter = new MyAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
+        setHasOptionsMenu(true);
+
+
 
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Projects");
@@ -99,32 +103,61 @@ public class OpportunityFragment extends Fragment {
 
             }
         });
-        /*mDatabaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()) {
-                    System.out.println(dataSnapshot1);
-                    list.add(dataSnapshot1.getKey());
-                    //list.dataSnapshot1.toString();
-                }
-
-                mAdapter = new MyAdapter(list);
-                mRecyclerView.setAdapter(mAdapter);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });*/
 
         return view;
     }
 
-    public List<OpportunityListItem> getAllOpportunities() {
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        MenuItem actionSetting = menu.findItem(R.id.action_settings);
+        searchItem.setVisible(true);
+        actionSetting.setVisible(false);
+        SearchView searchView = (SearchView) searchItem.getActionView();
+        searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint("Search");
+    }
+
+    public ArrayList<OpportunityListItem> getList() {
         return list;
     }
 
+    @Override
+    public boolean onMenuItemActionExpand(MenuItem menuItem) {
+        return true;
+    }
+
+    @Override
+    public boolean onMenuItemActionCollapse(MenuItem menuItem) {
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        if (s == null || s.trim().isEmpty()) {
+            resetSearch();
+            return false;
+        }
+        ArrayList<OpportunityListItem> filteredList = new ArrayList<OpportunityListItem>(list);
+        for(OpportunityListItem item : list) {
+            if(!item.descrition.toLowerCase().contains(s.toLowerCase()) && !item.title.toLowerCase().contains(s.toLowerCase())) {
+                filteredList.remove(item);
+            }
+        }
+        mAdapter = new MyAdapter(filteredList);
+        mRecyclerView.setAdapter(mAdapter);
+        return false;
+    }
+
+    private void resetSearch() {
+
+        mAdapter = new MyAdapter(list);
+        mRecyclerView.setAdapter(mAdapter);
+
+    }
 }

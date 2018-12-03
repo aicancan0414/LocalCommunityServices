@@ -31,14 +31,14 @@ public class OrganizationOppurtunityList extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.OrganizationOppurtunityList);
+        setContentView(R.layout.organization_oppurtunity_list);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Projects");
 
         expandableListView = findViewById(R.id.lvExp);
         SetStandardGroups();
-        customExpandableListViewAdapter = new adapter(this, listDataHeader, listDataChild);
+        //customExpandableListViewAdapter = new adapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(customExpandableListViewAdapter);
         Button post = findViewById(R.id.button4);
 
