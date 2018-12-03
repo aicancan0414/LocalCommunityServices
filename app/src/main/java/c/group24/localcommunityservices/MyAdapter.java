@@ -1,6 +1,7 @@
 package c.group24.localcommunityservices;
 
-//import android.support.v7.widget.CardView;
+import android.content.Intent;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,24 +24,32 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
 
-        //public CardView cv;
+        public CardView cv;
         public TextView mTitle;
         public TextView mDescription;
         public MyViewHolder(View v) {
             super(v);
-            //cv = (CardView)itemView.findViewById(R.id.cv);
+
+
+            cv = (CardView)itemView.findViewById(R.id.cv);
 
             mTitle = (TextView) itemView.findViewById(R.id.opportunity_title);
             mDescription = (TextView) itemView.findViewById(R.id.opportunity_description);
-           // cv.setOnClickListener(this);
+            cv.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
             //System.out.println("HEREHEHEHEHEHEHEH");
             // Display a Toast message indicting the selected item
-            Toast.makeText(view.getContext(),
-                    mTitle.getText(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(view.getContext(), StudentDescription.class );
+            intent.putExtra("project", mTitle.getText().toString());
+
+            view.getContext().startActivity(intent);
+
+
+
+            //Toast.makeText(view.getContext(),mTitle.getText(), Toast.LENGTH_SHORT).show();
         }
     }
 
