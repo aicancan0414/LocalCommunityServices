@@ -49,7 +49,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
 
-            Toast.makeText(view.getContext(),mTitle.getText(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(view.getContext(),mTitle.getText(), Toast.LENGTH_SHORT).show();
         }
     }
 
