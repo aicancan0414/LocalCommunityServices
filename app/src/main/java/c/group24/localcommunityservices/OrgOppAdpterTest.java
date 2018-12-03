@@ -23,14 +23,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class orgAdpterTest extends BaseExpandableListAdapter {
+public class OrgOppAdpterTest extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> headerItem;
     private HashMap<String, List<String>> childItem;
 
 
-    public orgAdpterTest(Context context, List<String> headerItem, HashMap<String, List<String>> childItem) {
+    public OrgOppAdpterTest(Context context, List<String> headerItem, HashMap<String, List<String>> childItem) {
         this.context = context;
         this.headerItem = headerItem;
         this.childItem = childItem;
@@ -49,6 +49,7 @@ public class orgAdpterTest extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
+        Log.e("test","8");
         String childText = (String) getChild(groupPosition, childPosition);
 
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
