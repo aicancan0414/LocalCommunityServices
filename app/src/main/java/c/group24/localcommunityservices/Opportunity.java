@@ -1,13 +1,26 @@
 package c.group24.localcommunityservices;
 
-import java.util.Map;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Opportunity {
+    public String title;
     public String contact;
+    public String date;
+    public String location;
     public String description;
-    public Map<String,String> students;
+    public String requirements;
+    public List<Student> students;
 
-    Opportunity(){}
+    Opportunity(){ students = new LinkedList<>(); }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getContact() {
         return contact;
@@ -15,6 +28,22 @@ public class Opportunity {
 
     public void setContact(String contact) {
         this.contact = contact;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDescription() {
@@ -25,11 +54,19 @@ public class Opportunity {
         this.description = description;
     }
 
-    public Map<String, String> getStudents() {
+    public String getRequirements() {
+        return requirements;
+    }
+
+    public void setRequirements(String requirements) {
+        this.requirements = requirements;
+    }
+
+    public List<Student> getStudents() {
         return students;
     }
 
-    public void setStudents(Map<String, String> students) {
-        this.students = students;
+    public void addStudents(Student students) {
+        this.students.add(students);
     }
 }

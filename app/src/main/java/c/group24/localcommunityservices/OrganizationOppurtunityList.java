@@ -58,7 +58,7 @@ public class OrganizationOppurtunityList extends Activity {
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(OrganizationOppurtunityList.this,  Add.class    );////////////
+                Intent i = new Intent(OrganizationOppurtunityList.this,  AddOpsActivity.class    );////////////
                 startActivity(i);
             }
         });
