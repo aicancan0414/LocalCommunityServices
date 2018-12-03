@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -75,20 +75,14 @@ public class AddOpsActivity extends AppCompatActivity {
                 UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 Opportunity opportunity = new Opportunity();
-                opportunity.setTitle(mTitleText.getText().toString());
+                opportunity.setOrg(organization.child(UID).child("Name").toString());
+                opportunity.setOrgID(UID);
                 opportunity.setContact(organization.child(UID).child("Email").toString());
                 opportunity.setDate(mDateString);
                 opportunity.setLocation(mLocationText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
-                opportunity.setDescription(mDescriptionText.getText().toString());
-                project.push().setValue(opportunity);
-
-                DatabaseReference ref = firebaseDatabase.getReference().child("Organization").child(UID).child("Offered Projects").child(mTitleText.getText().toString());
-                ref.child("Title").setValue(mTitleText.getText().toString());
-                ref.child("Date").setValue(mDateString.toString());
-                ref.child("Location").setValue(mLocationText.getText().toString());
-                ref.child("Description").setValue(mDescriptionText.getText().toString());
-
+                opportunity.setRequirements(mRequirementsText.getText().toString());
+                project.child(mTitleText.getText().toString()).setValue(opportunity);
                 finish();
             }
         });

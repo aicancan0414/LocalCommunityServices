@@ -14,14 +14,14 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder> {
 
-    private ArrayList<OpportunityListItem> mDataset;
+    private ArrayList<Opportunity> mDataset;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
 
         public CardView cv;
@@ -40,27 +40,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
         @Override
         public void onClick(View view) {
-            //System.out.println("HEREHEHEHEHEHEHEH");
-            // Display a Toast message indicting the selected item
-            Intent intent = new Intent(view.getContext(), StudentDescription.class );
-            intent.putExtra("project", mTitle.getText());
-
-            view.getContext().startActivity(intent);
-
-
-
-            //Toast.makeText(view.getContext(),mTitle.getText(), Toast.LENGTH_SHORT).show();
+            mDataset.get(getAdapterPosition());
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<OpportunityListItem> myDataset) {
+    public EventAdapter(ArrayList<Opportunity> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public EventAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         //System.out.println("HEREHEHEHEHEHEHEH");
         // create a new view
@@ -76,7 +67,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
         holder.mTitle.setText(mDataset.get(position).title);
-        holder.mDescription.setText(mDataset.get(position).descrition);
+        holder.mDescription.setText(mDataset.get(position).description);
 
         //holder.mTextView.setText(mDataset.get(position));
 
