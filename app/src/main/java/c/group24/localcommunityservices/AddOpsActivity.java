@@ -17,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class AddOpsActivity extends AppCompatActivity {
 
@@ -71,13 +72,15 @@ public class AddOpsActivity extends AppCompatActivity {
                 organization = firebaseDatabase.getReference("Organization");
                 project = firebaseDatabase.getReference("Projects");
                 UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                String title = mTitleText.getText().toString();
-                project.child(title).push();
-                project.child(title).child("contact").push().setValue(organization.child(UID).child("Email"));
-                project.child(title).child("date").push().setValue(mDateString);
-                project.child(title).child("location").push().setValue(mLocationText.getText());
-                project.child(title).child("description").push().setValue(mDescriptionText.getText());
-                project.child(title).child("requirements").push().setValue(mRequirementsText.getText());
+
+                Opportunity opportunity = new Opportunity();
+                opportunity.setTitle(mTitleText.getText().toString());
+                opportunity.setContact(organization.child(UID).child("Email").toString());
+                opportunity.setDate(mDateString);
+                opportunity.setLocation(mLocationText.getText().toString());
+                opportunity.setDescription(mDescriptionText.getText().toString());
+                opportunity.setDescription(mDescriptionText.getText().toString());
+                project.push().setValue(opportunity);
                 finish();
             }
         });

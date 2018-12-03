@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,7 +28,7 @@ public class StudentDescription extends Activity {
     private FirebaseUser user;
     private String userID, orgID;
 
-    private TextView name, description, location, requirements, feedback;
+    private TextView name, description, location, requirements, date;
     private Button volunteer, viewProfile;
 
 
@@ -47,7 +48,7 @@ public class StudentDescription extends Activity {
         description = findViewById(R.id.description);
         location = findViewById(R.id.address);
         requirements = findViewById(R.id.requirements);
-        feedback = findViewById(R.id.feedback);
+        date = findViewById(R.id.date);
         volunteer = findViewById(R.id.applyButton);
         viewProfile = findViewById(R.id.orgProfileButton);
         Intent intent = getIntent();
@@ -72,6 +73,7 @@ public class StudentDescription extends Activity {
             @Override
             public void onClick(View v) {
                 getName(project);
+                Toast.makeText(StudentDescription.this, "Successfully added to list of volunteers", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -89,11 +91,19 @@ public class StudentDescription extends Activity {
         Map<String, String> map = (Map<String, String>) ds.getValue();
 
         if(map != null){
+<<<<<<< HEAD
             description.setText(map.get("Description"));
             location.setText(map.get("Address"));
             requirements.setText(map.get("Requirements"));
             feedback.setText(map.get("Feedback"));
             orgID = "EJ4sDWRJh8TaesIr07BdshGD4Fu1"; //map.get("OrgID");
+=======
+            description.setText(map.get("description"));
+            location.setText(map.get("location"));
+            requirements.setText(map.get("requirements"));
+            date.setText(map.get("date"));
+            orgID = map.get("orgID");
+>>>>>>> ce9de696cc157bf5a309ff61214585e4f083aeff
         }
 
     }

@@ -50,10 +50,10 @@
             android:name=".StudentMainActivity"
             android:label="@string/title_activity_student_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity android:name=".StudentDescription">
+        <activity android:name=".StudentDescription"></activity>
+        <activity android:name=".Add">
             <intent-filter>
-
+                <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -61,6 +61,8 @@
 
         <activity android:name=".OrgProfileActivity">
         </activity>
+
+
 
 
     </application>
