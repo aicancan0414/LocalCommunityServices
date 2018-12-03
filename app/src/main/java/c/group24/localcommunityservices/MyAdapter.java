@@ -43,13 +43,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             //System.out.println("HEREHEHEHEHEHEHEH");
             // Display a Toast message indicting the selected item
             Intent intent = new Intent(view.getContext(), StudentDescription.class );
-            intent.putExtra("project", mTitle.getText().toString());
+            intent.putExtra("project", mTitle.getText());
 
             view.getContext().startActivity(intent);
 
 
 
-            //Toast.makeText(view.getContext(),mTitle.getText(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(view.getContext(),mTitle.getText(), Toast.LENGTH_SHORT).show();
         }
     }
 
