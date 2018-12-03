@@ -91,19 +91,11 @@ public class StudentDescription extends Activity {
         Map<String, String> map = (Map<String, String>) ds.getValue();
 
         if(map != null){
-<<<<<<< HEAD
-            description.setText(map.get("Description"));
-            location.setText(map.get("Address"));
-            requirements.setText(map.get("Requirements"));
-            feedback.setText(map.get("Feedback"));
-            orgID = "EJ4sDWRJh8TaesIr07BdshGD4Fu1"; //map.get("OrgID");
-=======
             description.setText(map.get("description"));
             location.setText(map.get("location"));
             requirements.setText(map.get("requirements"));
             date.setText(map.get("date"));
             orgID = map.get("orgID");
->>>>>>> ce9de696cc157bf5a309ff61214585e4f083aeff
         }
 
     }
