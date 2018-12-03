@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +22,9 @@ import java.util.List;
 public class OrganizationOppurtunityList extends Activity {
 
     ExpandableListView expandableListView;
-    OrganizationAdapter customExpandableListViewAdapter;
+    ///OrganizationAdapter customExpandableListViewAdapter;
+
+    orgAdpterTest customExpandableListViewAdapter;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
@@ -34,7 +37,15 @@ public class OrganizationOppurtunityList extends Activity {
         setContentView(R.layout.organization_oppurtunity_list);
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Projects");
+        FirebaseAuth auth=FirebaseAuth.getInstance();
+        final String uidStr=auth.getCurrentUser().getUid();
+        //final String user=auth.getCurrentUser();
+        Log.e("uid","hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        Log.e("uid", uidStr );
+
+        myRef = database.getReference("Organization").child(uidStr).child("Offered Projects");
+
+
 
         expandableListView = findViewById(R.id.lvExp);
         SetStandardGroups();

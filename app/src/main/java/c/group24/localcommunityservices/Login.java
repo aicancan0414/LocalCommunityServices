@@ -58,7 +58,8 @@ public class Login extends Activity {
                                         startActivity(goToStudentPg);
 
                                     }else{
-                                        Intent goToOrg = new Intent();
+                                        Intent goToOrg = new Intent(Login.this, OrganizationOppurtunityList.class);
+                                        startActivity(goToOrg);
                                     }
                                 }
                                 else if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
