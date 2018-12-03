@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -33,6 +34,7 @@ public class OrgProfileFragment extends Fragment{
 
     private EditText nameView, addressView, emailView, infoView;
     private RatingBar ratingView;
+    private TextView noRating;
 
     @Nullable
     @Override
@@ -50,6 +52,7 @@ public class OrgProfileFragment extends Fragment{
         emailView = view.findViewById(R.id.email);
         infoView = view.findViewById(R.id.org_info);
         ratingView = view.findViewById(R.id.ratingBar);
+        noRating = view.findViewById(R.id.noRating);
 
         databaseReference.child(userID).addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,17 +79,28 @@ public class OrgProfileFragment extends Fragment{
 
         if (nameView.getText().toString().equals(""))
             nameView.setVisibility(View.GONE);
+        else
+            nameView.setVisibility(View.VISIBLE);
         if (emailView.getText().toString().equals(""))
             emailView.setVisibility(View.GONE);
+        else
+            emailView.setVisibility(View.VISIBLE);
         if (addressView.getText().toString().equals(""))
             addressView.setVisibility(View.GONE);
+        else
+            addressView.setVisibility(View.VISIBLE);
         if (infoView.getText().toString().equals(""))
             infoView.setVisibility(View.GONE);
-        if (map.get("Rating").equals(""))
+        else
+            infoView.setVisibility(View.VISIBLE);
+        if (map.get("Rating").equals("")) {
             ratingView.setVisibility(View.GONE);
+            noRating.setVisibility(View.VISIBLE);
+        }
         else {
             ratingView.setRating(Float.parseFloat(map.get("Rating")));
-            ratingView.setVisibility(View.VISIBLE);
+            ratingView.setVisibility(View.GONE);
+            noRating.setVisibility(View.VISIBLE);
         }
 
 
