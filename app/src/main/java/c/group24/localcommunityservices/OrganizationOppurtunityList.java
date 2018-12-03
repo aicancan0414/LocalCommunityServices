@@ -24,7 +24,7 @@ public class OrganizationOppurtunityList extends Activity {
     ExpandableListView expandableListView;
     ///OrganizationAdapter customExpandableListViewAdapter;
 
-    orgAdpterTest customExpandableListViewAdapter;
+    OrgOppAdpterTest customExpandableListViewAdapter;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
@@ -46,12 +46,17 @@ public class OrganizationOppurtunityList extends Activity {
         myRef = database.getReference("Organization").child(uidStr).child("Offered Projects");
 
 
+        Log.e("test","1");
 
         expandableListView = findViewById(R.id.lvExp);
         SetStandardGroups();
-        //customExpandableListViewAdapter = new adapter(this, listDataHeader, listDataChild);
+
+
+        customExpandableListViewAdapter = new OrgOppAdpterTest(this, listDataHeader, listDataChild);
+
         expandableListView.setAdapter(customExpandableListViewAdapter);
         Button post = findViewById(R.id.button4);
+        Log.e("test","2");
 
         post.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +74,9 @@ public class OrganizationOppurtunityList extends Activity {
         listDataHeader = new ArrayList<>();
         listDataChild = new HashMap<>();
 
+        Log.e("test","3");
         myRef.addChildEventListener(new ChildEventListener() {
+
             int counter = 0;
             List<String> childItem = new ArrayList<>();
 
@@ -79,12 +86,21 @@ public class OrganizationOppurtunityList extends Activity {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                 listDataHeader.add(dataSnapshot.getKey());
-                Log.e("TAG", listDataHeader.get(counter));
+
+                String str = listDataHeader.get(counter);
+                Log.e("TAG","abs"+ str);
+
+
+                Log.e("TAG1", listDataHeader.get(counter));
+                String k  = listDataHeader.get(counter);
+                Log.e("test",k);
+
                 childItem = new ArrayList<>();
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String childNames = (String) ds.getValue();
                     String key = ds.getKey();
+                    Log.e("test","5");
                     Log.e("TAG", "childNames :" + childNames);
                     childItem.add(key + " : " +childNames);
                 }
