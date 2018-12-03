@@ -7,33 +7,56 @@
         android:id="@+id/opsTitleLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
         android:text="@string/ops_title" />
 
     <EditText
         android:id="@+id/opsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsTitleLabel"
         android:ems="10"
         android:hint="@string/enter_title"
         android:inputType="textMultiLine" />
 
     <TextView
+        android:id="@+id/opsDateLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_below="@id/opsTitle"
+        android:text="@string/ops_date" />
+
+    <TextView
+        android:id="@+id/opsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_below="@id/opsDateLabel" />
+
+    <Button
+        android:id="@+id/opsDateButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_below="@id/opsDate"
+        android:text="@string/choose_date" />
+
+    <TextView
         android:id="@+id/opsLocationLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@id/opsTitle"
+        android:layout_marginStart="32dp"
+        android:layout_below="@id/opsDateButton"
         android:text="@string/ops_location" />
 
     <EditText
         android:id="@+id/opsLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsLocationLabel"
         android:ems="10"
         android:hint="@string/enter_location"
@@ -43,7 +66,7 @@
         android:id="@+id/opsDescriptionLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsLocation"
         android:text="@string/ops_description" />
 
@@ -51,7 +74,7 @@
         android:id="@+id/opsDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsDescriptionLabel"
         android:ems="10"
         android:hint="@string/enter_description"
@@ -61,7 +84,7 @@
         android:id="@+id/opsRequirementsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsDescription"
         android:text="@string/ops_requirements" />
 
@@ -69,7 +92,7 @@
         android:id="@+id/opsRequirements"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsRequirementsLabel"
         android:ems="10"
         android:hint="@string/enter_requirements"
@@ -79,7 +102,7 @@
         android:id="@+id/createButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_marginStart="32dp"
         android:layout_below="@id/opsRequirements"
         android:text="@string/create" />
 
