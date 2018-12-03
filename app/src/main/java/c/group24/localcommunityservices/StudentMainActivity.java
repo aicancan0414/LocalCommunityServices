@@ -39,6 +39,7 @@ public class StudentMainActivity extends AppCompatActivity
 
         //Instantiate the opportunity fragment
         fragment = new OpportunityFragment();
+        //fragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
 
@@ -81,6 +82,8 @@ public class StudentMainActivity extends AppCompatActivity
             return true;
         }
         if(id == R.id.editProfile) {
+            fragment = new EditProfileFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
             return true;
         }
 
@@ -100,6 +103,7 @@ public class StudentMainActivity extends AppCompatActivity
             settingsMenuItem.setVisible(false);
             MenuItem ediMenuItem = menu.findItem(R.id.editProfile);
             ediMenuItem.setVisible(true);
+            setTitle("Profile");
             //getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
         } else if (id == R.id.nav_pastevents) {
@@ -107,6 +111,7 @@ public class StudentMainActivity extends AppCompatActivity
 
         } else if(id == R.id.nav_futureevents) {
             fragment = new OpportunityFragment();
+            setTitle("Opportunities");
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
         }
 
