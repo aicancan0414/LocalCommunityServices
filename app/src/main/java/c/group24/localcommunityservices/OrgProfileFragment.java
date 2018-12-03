@@ -31,7 +31,7 @@ public class OrgProfileFragment extends Fragment{
     private FirebaseUser user;
     private String userID;
 
-    private EditText nameView, addressView, numVolunteerView, emailView, infoView;
+    private EditText nameView, addressView, emailView, infoView;
     private RatingBar ratingView;
 
     @Nullable
@@ -47,7 +47,6 @@ public class OrgProfileFragment extends Fragment{
 
         nameView = view.findViewById(R.id.org_name);
         addressView = view.findViewById(R.id.address);
-        numVolunteerView = view.findViewById(R.id.volunteers);
         emailView = view.findViewById(R.id.email);
         infoView = view.findViewById(R.id.org_info);
         ratingView = view.findViewById(R.id.ratingBar);
@@ -72,7 +71,6 @@ public class OrgProfileFragment extends Fragment{
             nameView.setText(map.get("Name"));
             addressView.setText(map.get("Address"));
             emailView.setText(map.get("Email"));
-            numVolunteerView.setText(map.get("Number of Volunteers"));
             infoView.setText(map.get("Description"));
         }
 
