@@ -81,7 +81,7 @@ public class AddOpsActivity extends AppCompatActivity {
                 opportunity.setDate(mDateString);
                 opportunity.setLocation(mLocationText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
-                opportunity.setDescription(mDescriptionText.getText().toString());
+                opportunity.setRequirements(mRequirementsText.getText().toString());
                 project.child(mTitleText.getText().toString()).setValue(opportunity);
                 finish();
             }

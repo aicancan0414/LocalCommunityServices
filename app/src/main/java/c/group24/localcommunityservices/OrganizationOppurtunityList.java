@@ -50,10 +50,7 @@ public class OrganizationOppurtunityList extends Activity {
 
         expandableListView = findViewById(R.id.lvExp);
         SetStandardGroups();
-
-
         customExpandableListViewAdapter = new OrgOppAdpterTest(this, listDataHeader, listDataChild);
-
         expandableListView.setAdapter(customExpandableListViewAdapter);
         Button post = findViewById(R.id.button4);
         Log.e("test","2");
@@ -87,14 +84,9 @@ public class OrganizationOppurtunityList extends Activity {
 
                 listDataHeader.add(dataSnapshot.getKey());
 
-                String str = listDataHeader.get(counter);
-                Log.e("TAG","abs"+ str);
-
-
                 Log.e("TAG1", listDataHeader.get(counter));
                 String k  = listDataHeader.get(counter);
                 Log.e("test",k);
-
                 childItem = new ArrayList<>();
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
