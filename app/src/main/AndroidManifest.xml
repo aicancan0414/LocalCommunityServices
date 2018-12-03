@@ -51,14 +51,15 @@
             android:label="@string/title_activity_student_main"
             android:theme="@style/AppTheme.NoActionBar"></activity>
 
+        <activity android:name=".StudentDescription">
+            <intent-filter>
 
-<<<<<<< HEAD
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-=======
->>>>>>> 56094ec1a31a3453d66a1f73f6f4f3d3e23396c0
+
     </application>
 
 </manifest>
