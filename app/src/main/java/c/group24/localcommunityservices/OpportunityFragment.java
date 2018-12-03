@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +25,7 @@ import android.view.MenuItem;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.widget.SearchView;
+import java.util.Map;
 
 import java.util.ArrayList;
 
@@ -37,18 +40,14 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
     private RecyclerView.LayoutManager mLayoutManager;
     private DatabaseReference mDatabaseRef;
     private ArrayList<OpportunityListItem> list = new ArrayList<>();
-    private SearchView searchView;
-    //private Menu menuRef;
-
-
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
+    private String userID;
+    private String title;
 
     public OpportunityFragment() {
         // Required empty public constructor
     }
-
-
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,31 +60,71 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
         mRecyclerView = view.findViewById(R.id.oppsRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
         mAdapter = new MyAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         setHasOptionsMenu(true);
 
-
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        userID = user.getUid();
 
         mDatabaseRef = FirebaseDatabase.getInstance().getReference().child("Projects");
         mDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //System.out.println("IN ADD CHILD EVENT LISTENER");
-                Opportunity opp = dataSnapshot.getValue(Opportunity.class);
-                String description = opp.getDescription();
-                list.add(new OpportunityListItem(dataSnapshot.getKey(), description));
-                //mAdapter.notifyItemInserted(list.size()-1);
-                mAdapter.notifyDataSetChanged();
 
+                for(DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
+                    if(dataSnapshot2.getKey().equals("description")) {
+                        list.add(new OpportunityListItem(dataSnapshot.getKey(), dataSnapshot2.getValue().toString()));
+                    }
+                }
+                ArrayList<OpportunityListItem> items = new ArrayList<OpportunityListItem>(list);
+                for(DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                    if(dataSnapshot1.getKey().equals("students")) {
+                        Map<String, String> students = (Map<String, String>) dataSnapshot1.getValue();
+                        if(students != null) {
+                            for(String key : students.keySet()) {
+                                if(key.equals(userID)) {
+                                    for (OpportunityListItem item : items) {
+                                        if(item.title.equals(dataSnapshot.getKey()))
+                                            list.remove(item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+                title = dataSnapshot.getKey();
+                mDatabaseRef.child(dataSnapshot.getKey()).child("students").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        System.out.println("HERE");
+                        Map<String, String> students = (Map<String, String>) dataSnapshot.getValue();
+                        ArrayList<OpportunityListItem> items = new ArrayList<>(list);
+                        for(String key : students.keySet()) {
+                            if(key.equals(userID)) {
+                                for(OpportunityListItem item : items) {
+                                    if(item.title.equals(title)) {
+                                        list.remove(item);
+                                    }
+                                }
+                            }
+                        }
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
 
             @Override
