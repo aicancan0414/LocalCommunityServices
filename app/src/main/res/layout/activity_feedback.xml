@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/opsRatingLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ops_rating" />
+
+    <RatingBar
+        android:id="@+id/opsRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/opsRatingLabel" />
+
+    <TextView
+        android:id="@+id/opsFeedbackLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ops_feedback"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/opsRating" />
+
+    <EditText
+        android:id="@+id/opsFeedback"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/opsFeedbackLabel"
+        android:ems="10"
+        android:hint="@string/enter_feedback"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/opsFeedback"
+        android:text="@string/submit" />
+
+    <Button
+        android:id="@+id/clearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opsFeedback"
+        android:layout_toEndOf="@id/submitButton"
+        android:text="@string/clear" />
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/opsFeedback"
+        android:layout_toEndOf="@id/clearButton"
+        android:text="@string/cancel" />
+</RelativeLayout>

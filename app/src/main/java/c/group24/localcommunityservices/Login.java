@@ -54,17 +54,21 @@ public class Login extends Activity {
                                     int sp = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().indexOf(':');
                                     String identity = FirebaseAuth.getInstance().getCurrentUser().getDisplayName().substring(0,sp);
                                     if(identity.equals("Student")){
-                                        Intent goToStudentPg = new Intent();
+                                        Intent goToStudentPg = new Intent(Login.this, StudentMainActivity.class);
+                                        startActivity(goToStudentPg);
+
                                     }else{
-                                        Intent goToOrg = new Intent();
+                                        Intent goToOrg = new Intent(Login.this, OrganizationOppurtunityList.class);
+                                        startActivity(goToOrg);
                                     }
-                                    } else if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
+                                }
+                                else if (!FirebaseAuth.getInstance().getCurrentUser().isEmailVerified()){
                                     Intent goVerify = new Intent(Login.this,EmailVerificatiion.class);
                                     startActivity(goVerify);
-                                    }else{
+                                }
+                                else{
                                     Log.e("ERROR", task.getException().toString());
                                     Toast.makeText(Login.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-
                                 }
                             }
                         });
