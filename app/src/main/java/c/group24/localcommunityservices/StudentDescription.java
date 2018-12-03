@@ -56,7 +56,7 @@ public class StudentDescription extends Activity {
         name.setText(project);
 
         //Find information associated with the project
-        projectDatabase.child(project).addValueEventListener(new ValueEventListener() {
+        projectDatabase.child(project).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 setText(dataSnapshot);
@@ -78,7 +78,7 @@ public class StudentDescription extends Activity {
         viewProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentDescription.this, OrgProfileFragment.class);
+                Intent intent = new Intent(StudentDescription.this, OrgProfileActivity.class);
                 intent.putExtra("uid", orgID);
                 startActivity(intent);
             }
@@ -93,7 +93,7 @@ public class StudentDescription extends Activity {
             location.setText(map.get("Address"));
             requirements.setText(map.get("Requirements"));
             feedback.setText(map.get("Feedback"));
-            orgID = "gOa9VB1lsrhhypIZNQvZa9rlyUL2"; //map.get("OrgID");
+            orgID = "EJ4sDWRJh8TaesIr07BdshGD4Fu1"; //map.get("OrgID");
         }
 
     }

@@ -73,7 +73,8 @@
                 android:id="@+id/org_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Girl Scouts unleashes the G.I.R.L. (Go-getter, Innovator, Risk-taker, Leader)™ in every girl, preparing her for a lifetime of leadership—from taking a night-time hike under the stars to accepting a mission on the International Space Station; from lobbying the city council with her troop to holding a seat in Congress; from running her own cookie business today to tackling cybersecurity tomorrow."
+                android:text=""
+                android:hint="Organization Description"
                 android:inputType="none"
                 android:editable="false"
                 android:background="@android:color/transparent"
@@ -118,6 +119,15 @@
                     android:numStars="5"
                     android:progressTint="@color/colorPrimary"
                     android:rating="5" />
+
+                <TextView
+                    android:id="@+id/noRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="15dp"
+                    android:visibility="gone"
+                    android:text="No Ratings yet" />
 
             </LinearLayout>
         </LinearLayout>
