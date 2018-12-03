@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -74,13 +75,14 @@ public class AddOpsActivity extends AppCompatActivity {
                 UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 Opportunity opportunity = new Opportunity();
-                opportunity.setTitle(mTitleText.getText().toString());
+                opportunity.setOrg(organization.child(UID).child("Name").toString());
+                opportunity.setOrgID(UID);
                 opportunity.setContact(organization.child(UID).child("Email").toString());
                 opportunity.setDate(mDateString);
                 opportunity.setLocation(mLocationText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
-                project.push().setValue(opportunity);
+                project.child(mTitleText.getText().toString()).setValue(opportunity);
                 finish();
             }
         });
