@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Opportunity {
+    public String title;
     public String contact;
     public String date;
     public String location;
@@ -12,6 +13,14 @@ public class Opportunity {
     public List<Student> students;
 
     Opportunity(){ students = new LinkedList<>(); }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getContact() {
         return contact;

@@ -74,14 +74,13 @@ public class AddOpsActivity extends AppCompatActivity {
                 UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                 Opportunity opportunity = new Opportunity();
+                opportunity.setTitle(mTitleText.getText().toString());
                 opportunity.setContact(organization.child(UID).child("Email").toString());
                 opportunity.setDate(mDateString);
                 opportunity.setLocation(mLocationText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
-
-                String title = mTitleText.getText().toString();
-                project.child(title).push().setValue(opportunity);
+                project.push().setValue(opportunity);
                 finish();
             }
         });
