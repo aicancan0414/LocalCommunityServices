@@ -7,17 +7,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class AddOpsActivity extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-    public final static String TITLE = "title";
-    public final static String LOCATION = "location";
-    public final static String DESCRIPTION = "description";
-    public final static String REQUIREMENTS = "requirements";
+public class AddOpsActivity extends AppCompatActivity {
 
     private EditText mTitleText;
     private EditText mLocationText;
     private EditText mDescriptionText;
     private EditText mRequirementsText;
+    private Date mDate;
+
+    private FirebaseDatabase firebaseDatabase
+    private DatabaseReference organization;
+    private DatabaseReference project;
+    private String UID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +31,12 @@ public class AddOpsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_ops);
 
         findViewById(R.id.opsTitleLabel);
+        findViewById(R.id.opsDateLabel);
         findViewById(R.id.opsLocationLabel);
         findViewById(R.id.opsDescriptionLabel);
         findViewById(R.id.opsRequirementsLabel);
         mTitleText = findViewById(R.id.opsTitle);
+        mDate = findViewById(R.id.opsDate);
         mLocationText = findViewById(R.id.opsLocation);
         mDescriptionText = findViewById(R.id.opsDescription);
         mRequirementsText = findViewById(R.id.opsRequirements);
@@ -37,12 +45,16 @@ public class AddOpsActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(TITLE, mTitleText.getText().toString());
-                intent.putExtra(LOCATION, mLocationText.getText().toString());
-                intent.putExtra(DESCRIPTION, mDescriptionText.getText().toString());
-                intent.putExtra(REQUIREMENTS, mRequirementsText.getText().toString());
-                setResult(RESULT_OK, intent);
+                firebaseDatabase = FirebaseDatabase.getInstance();
+                organization = firebaseDatabase.getReference("Organization");
+                project = firebaseDatabase.getReference("Projects");
+                UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                String title = mTitleText.getText().toString();
+                project.child(title).push();
+                project.child(title).child("contact").push().setValue(organization.child(UID).child("Email"));
+                project.child(title).child("location").push().setValue(mLocationText.getText());
+                project.child(title).child("description").push().setValue(mDescriptionText.getText());
+                project.child(title).child("requirements").push().setValue(mRequirementsText.getText());
                 finish();
             }
         });
@@ -62,7 +74,6 @@ public class AddOpsActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
                 finish();
             }
         });

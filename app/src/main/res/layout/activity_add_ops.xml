@@ -22,11 +22,27 @@
         android:inputType="textMultiLine" />
 
     <TextView
-        android:id="@+id/opsLocationLabel"
+        android:id="@+id/opsDateLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@id/opsTitle"
+        android:text="@string/ops_date" />
+
+    <Button
+        android:id="@+id/opsDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/opsDateLabel"
+        android:text="@string/choose_date" />
+
+    <TextView
+        android:id="@+id/opsLocationLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/opsDate"
         android:text="@string/ops_location" />
 
     <EditText
