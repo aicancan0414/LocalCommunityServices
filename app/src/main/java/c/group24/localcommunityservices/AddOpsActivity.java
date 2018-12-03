@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -81,6 +82,13 @@ public class AddOpsActivity extends AppCompatActivity {
                 opportunity.setDescription(mDescriptionText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
                 project.push().setValue(opportunity);
+
+                DatabaseReference ref = firebaseDatabase.getReference().child("Organization").child(UID).child("Offered Projects").child(mTitleText.getText().toString());
+                ref.child("Title").setValue(mTitleText.getText().toString());
+                ref.child("Date").setValue(mDateString.toString());
+                ref.child("Location").setValue(mLocationText.getText().toString());
+                ref.child("Description").setValue(mDescriptionText.getText().toString());
+
                 finish();
             }
         });
