@@ -155,6 +155,7 @@ public class StudentMainActivity extends AppCompatActivity
         } else if (id == R.id.nav_pastevents) {
             fragment = new PastEventsFragment();
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+            setTitle("Past Activities");
 
 
 

@@ -3,15 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/pastOpsLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/past_ops" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pastOps"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pastOpsLabel" />
+        android:layout_height="wrap_content" />
 </RelativeLayout>
