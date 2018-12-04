@@ -8,6 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 public class FeedbackActivity extends AppCompatActivity {
 
     public final static String RATING = "rating";
@@ -26,14 +29,20 @@ public class FeedbackActivity extends AppCompatActivity {
         mFeedbackRating = findViewById(R.id.opsRating);
         mFeedbackText = findViewById(R.id.opsFeedback);
 
-        final Button createButton = findViewById(R.id.submitButton);
-        createButton.setOnClickListener(new View.OnClickListener() {
+        final Button submitButton = findViewById(R.id.submitButton);
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
-                intent.putExtra(RATING, mFeedbackRating.getRating());
-                intent.putExtra(FEEDBACK, mFeedbackText.getText().toString());
-                setResult(RESULT_OK, intent);
+                Intent intent = getIntent();
+                String UID = intent.getStringExtra("UID");
+                DatabaseReference organization = FirebaseDatabase.getInstance().getReference("Organization").child(UID);
+                float overall = Float.parseFloat(organization.child("Rating").toString());
+                int num = Integer.parseInt(organization.child("Num").toString());
+                num++;
+                float newRating = (overall * num + mFeedbackRating.getRating()) / num;
+                organization.child("Rating").setValue(String.valueOf(newRating));
+                organization.child("Num").setValue(String.valueOf(num));
+                organization.child("Review").child(String.valueOf(num)).setValue(mFeedbackText.getText());
                 finish();
             }
         });
@@ -51,7 +60,6 @@ public class FeedbackActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setResult(RESULT_CANCELED);
                 finish();
             }
         });

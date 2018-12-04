@@ -4,20 +4,27 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 public class AddOpsActivity extends AppCompatActivity {
 
@@ -36,6 +43,9 @@ public class AddOpsActivity extends AppCompatActivity {
     private DatabaseReference organization;
     private DatabaseReference project;
     private String UID;
+
+    private Opportunity opportunity = new Opportunity();
+    private String mOrg, mEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +66,10 @@ public class AddOpsActivity extends AppCompatActivity {
 
         setDefaultDate();
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        organization = firebaseDatabase.getReference("Organization");
+        project = firebaseDatabase.getReference("Projects");
+
         final Button datePickerButton = findViewById(R.id.opsDateButton);
         datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,19 +82,45 @@ public class AddOpsActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                organization = firebaseDatabase.getReference("Organization");
-                project = firebaseDatabase.getReference("Projects");
-                UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                Opportunity opportunity = new Opportunity();
-                opportunity.setTitle(mTitleText.getText().toString());
-                opportunity.setContact(organization.child(UID).child("Email").toString());
+                UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                opportunity.setOrgID(UID);
+
                 opportunity.setDate(mDateString);
                 opportunity.setLocation(mLocationText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());
+
                 opportunity.setDescription(mDescriptionText.getText().toString());
-                project.push().setValue(opportunity);
+                project.child(mTitleText.getText().toString()).setValue(opportunity);
+
+                organization.child(UID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
+                        mOrg = map.get("Name");
+                        mEmail = map.get("Email");
+                        project.child(mTitleText.getText().toString()).child("org").setValue(mOrg);
+                        project.child(mTitleText.getText().toString()).child("contact").setValue(mEmail);
+                        //Toast.makeText(AddOpsActivity.this, mEmail, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                DatabaseReference ref = firebaseDatabase.getReference().child("Organization").child(UID).child("Offered Projects").child(mTitleText.getText().toString());
+                ref.child("Title").setValue(mTitleText.getText().toString());
+                ref.child("Date").setValue(mDateString.toString());
+                ref.child("Location").setValue(mLocationText.getText().toString());
+                ref.child("Description").setValue(mDescriptionText.getText().toString());
+
+
+                opportunity.setRequirements(mRequirementsText.getText().toString());
+                project.child(mTitleText.getText().toString()).setValue(opportunity);
+
                 finish();
             }
         });

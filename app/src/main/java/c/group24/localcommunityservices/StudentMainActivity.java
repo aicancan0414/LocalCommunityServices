@@ -1,9 +1,11 @@
 package c.group24.localcommunityservices;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,15 +15,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class StudentMainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Menu menu;
     private Fragment fragment;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser user;
+    private String userID;
+    private TextView name, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Get the firebase reference
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Student");
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        userID = user.getUid();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -37,10 +64,29 @@ public class StudentMainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        View view = navigationView.getHeaderView(0);
+        name = view.findViewById(R.id.profile_name);
+        email = view.findViewById(R.id.profile_email);
+        databaseReference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
+                name.setText(map.get("Name"));
+                email.setText(map.get("Email"));
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
         //Instantiate the opportunity fragment
         fragment = new OpportunityFragment();
         //fragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
+
+        setTitle("Opportunities");
+
 
 
     }
@@ -107,6 +153,9 @@ public class StudentMainActivity extends AppCompatActivity
             //getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
         } else if (id == R.id.nav_pastevents) {
+            fragment = new PastEventsFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
 
 
         } else if(id == R.id.nav_futureevents) {
