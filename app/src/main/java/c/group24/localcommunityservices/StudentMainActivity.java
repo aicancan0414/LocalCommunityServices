@@ -85,6 +85,8 @@ public class StudentMainActivity extends AppCompatActivity
         //fragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
+        setTitle("Opportunities");
+
 
 
     }
