@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -59,6 +60,15 @@ public class OrganizationOppurtunityList extends Activity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(OrganizationOppurtunityList.this,  AddOpsActivity.class    );////////////
+                startActivity(i);
+            }
+        });
+
+        Button editProf = findViewById(R.id.profile);
+        editProf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(OrganizationOppurtunityList.this,EditOrganizationActivity.class);
                 startActivity(i);
             }
         });
