@@ -22,7 +22,7 @@ public class OrgProfileActivity extends Activity {
     private DatabaseReference databaseReference;
     private String userID;
 
-    private EditText nameView, addressView, numVolunteerView, emailView, infoView;
+    private EditText nameView, addressView, emailView, infoView;
     private RatingBar ratingView;
 
     @Override
@@ -37,7 +37,6 @@ public class OrgProfileActivity extends Activity {
         userID = intent.getStringExtra("uid");
         nameView = findViewById(R.id.org_name);
         addressView = findViewById(R.id.address);
-        numVolunteerView = findViewById(R.id.volunteers);
         emailView = findViewById(R.id.email);
         infoView = findViewById(R.id.org_info);
         ratingView = findViewById(R.id.ratingBar);
@@ -61,7 +60,6 @@ public class OrgProfileActivity extends Activity {
             nameView.setText(map.get("Name"));
             addressView.setText(map.get("Address"));
             emailView.setText(map.get("Email"));
-            numVolunteerView.setText(map.get("Number of Volunteers"));
             infoView.setText(map.get("Description"));
         }
 
@@ -83,7 +81,7 @@ public class OrgProfileActivity extends Activity {
             infoView.setVisibility(View.VISIBLE);
         if (map.get("Rating").equals("")) {
             ratingView.setVisibility(View.GONE);
-            findViewById(R.id.noRating).setVisibility(View.GONE);
+            findViewById(R.id.noRating).setVisibility(View.VISIBLE);
         }
         else {
             ratingView.setRating(Float.parseFloat(map.get("Rating")));

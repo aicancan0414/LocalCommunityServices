@@ -42,7 +42,7 @@ public class FeedbackActivity extends AppCompatActivity {
                 float newRating = (overall * num + mFeedbackRating.getRating()) / num;
                 organization.child("Rating").setValue(String.valueOf(newRating));
                 organization.child("Num").setValue(String.valueOf(num));
-                organization.child("Review").child(String.valueOf(num)).setValue(intent.getStringExtra("review"));
+                organization.child("Review").child(String.valueOf(num)).setValue(mFeedbackText.getText());
                 finish();
             }
         });
