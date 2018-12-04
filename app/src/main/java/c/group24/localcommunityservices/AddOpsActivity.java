@@ -83,9 +83,15 @@ public class AddOpsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                opportunity.setOrgID(UID);
 
-                UID = "EJ4sDWRJh8TaesIr07BdshGD4Fu1";
+                opportunity.setDate(mDateString);
+                opportunity.setLocation(mLocationText.getText().toString());
+                opportunity.setDescription(mDescriptionText.getText().toString());
+
+                opportunity.setDescription(mDescriptionText.getText().toString());
+                project.child(mTitleText.getText().toString()).setValue(opportunity);
 
                 organization.child(UID).addValueEventListener(new ValueEventListener() {
                     @Override
@@ -94,9 +100,9 @@ public class AddOpsActivity extends AppCompatActivity {
                         Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
                         mOrg = map.get("Name");
                         mEmail = map.get("Email");
-                        opportunity.setOrg(mOrg);
-                        opportunity.setContact(mEmail);
-                        Toast.makeText(AddOpsActivity.this, mEmail, Toast.LENGTH_LONG).show();
+                        project.child(mTitleText.getText().toString()).child("org").setValue(mOrg);
+                        project.child(mTitleText.getText().toString()).child("contact").setValue(mEmail);
+                        //Toast.makeText(AddOpsActivity.this, mEmail, Toast.LENGTH_LONG).show();
                     }
 
                     @Override
@@ -104,19 +110,6 @@ public class AddOpsActivity extends AppCompatActivity {
 
                     }
                 });
-
-                //Toast.makeText(AddOpsActivity.this, mEmail,Toast.LENGTH_LONG).show();
-                //opportunity.setOrg(organization.child(UID).child("Name").toString());
-
-                opportunity.setOrgID(UID);
-                //opportunity.setContact(organization.child(UID).child("Email").toString());
-
-                opportunity.setDate(mDateString);
-                opportunity.setLocation(mLocationText.getText().toString());
-                opportunity.setDescription(mDescriptionText.getText().toString());
-
-                opportunity.setDescription(mDescriptionText.getText().toString());
-                project.push().setValue(opportunity);
 
                 DatabaseReference ref = firebaseDatabase.getReference().child("Organization").child(UID).child("Offered Projects").child(mTitleText.getText().toString());
                 ref.child("Title").setValue(mTitleText.getText().toString());
