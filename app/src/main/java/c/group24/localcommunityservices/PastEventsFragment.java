@@ -32,29 +32,73 @@ public class PastEventsFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private ArrayList<OpportunityListItem> list = new ArrayList<>();
 
-    private DatabaseReference student;
+    private DatabaseReference student, project;
     private String UID;
+    private String date, description, orgID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_past_events, container, false);
-        mRecyclerView = view.findViewById(R.id.writeFeedback);
+        mRecyclerView = view.findViewById(R.id.pastOps);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        populateList();
         mAdapter = new FeedbackAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         setHasOptionsMenu(true);
 
+        project = FirebaseDatabase.getInstance().getReference("Projects");
         student = FirebaseDatabase.getInstance().getReference("Student");
         UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        populateList();
 
         return view;
     }
 
     private void populateList() {
-        student.child(UID).child("Project").addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference ref = student.child(UID).child("Opportunities");
+        if (ref != null) {
+            ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(new Date());
+                    int y = c.get(Calendar.YEAR);
+                    int m = c.get(Calendar.MONTH);
+                    int d = c.get(Calendar.DAY_OF_MONTH);
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        String proj = snapshot.getKey();
+                        project.child(proj).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
+                                date = map.get("date");
+                                description = map.get("description");
+                                orgID = map.get("orgID");
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        int year = Integer.parseInt(date.substring(0, 4));
+                        int month = Integer.parseInt(date.substring(5, 7));
+                        int day = Integer.parseInt(date.substring(8));
+                        if (year < y || (year == y && month < m) || (year == y && month == m && day < d)) {
+                            list.add(new OpportunityListItem(proj, description, orgID));
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+        student.child(UID).child("Projects").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Calendar c = Calendar.getInstance();

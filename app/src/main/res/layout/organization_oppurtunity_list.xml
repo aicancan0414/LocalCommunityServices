@@ -8,20 +8,20 @@
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/linearLayout2"
-        android:layout_width="405dp"
-        android:layout_height="416dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="425dp"
+        android:layout_height="492dp"
+        android:layout_marginTop="8dp"
         android:background="#f4f4f4"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4">
 
         <ExpandableListView
             android:id="@+id/lvExp"
             android:layout_width="match_parent"
-            android:layout_height="418dp">
+            android:layout_height="481dp">
 
         </ExpandableListView>
 
@@ -48,7 +48,7 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="124dp"
-        android:layout_marginTop="44dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/button_3"
         android:text="@string/orgOppPost"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -57,4 +57,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/profile"
+        android:layout_width="71dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/button_3"
+        android:text="Profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>
