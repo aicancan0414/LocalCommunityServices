@@ -79,6 +79,8 @@ public class OrgProfileActivity extends Activity {
             infoView.setVisibility(View.GONE);
         else
             infoView.setVisibility(View.VISIBLE);
+
+        /*
         if (map.get("Rating").equals("")) {
             ratingView.setVisibility(View.GONE);
             findViewById(R.id.noRating).setVisibility(View.VISIBLE);
@@ -87,7 +89,7 @@ public class OrgProfileActivity extends Activity {
             ratingView.setRating(Float.parseFloat(map.get("Rating")));
             ratingView.setVisibility(View.GONE);
             findViewById(R.id.noRating).setVisibility(View.VISIBLE);
-        }
+        }*/
 
     }
 }
