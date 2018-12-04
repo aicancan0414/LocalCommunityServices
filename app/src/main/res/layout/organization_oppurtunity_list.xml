@@ -20,7 +20,7 @@
         <ExpandableListView
             android:id="@+id/lvExp"
             android:layout_width="match_parent"
-            android:layout_height="382dp">
+            android:layout_height="500dp">
 
         </ExpandableListView>
 
@@ -47,13 +47,10 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="124dp"
-        android:layout_marginTop="44dp"
         android:background="@drawable/button_3"
         android:text="@string/orgOppPost"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 </android.support.constraint.ConstraintLayout>
