@@ -37,12 +37,12 @@ public class FeedbackActivity extends AppCompatActivity {
                 String UID = intent.getStringExtra("UID");
                 DatabaseReference organization = FirebaseDatabase.getInstance().getReference("Organization").child(UID);
                 float overall = Float.parseFloat(organization.child("Rating").toString());
-                int num = Integer.parseInt(organization.child("Num").toString());
+                int num = Integer.parseInt(organization.child("Number of Volunteers").toString());
                 num++;
                 float newRating = (overall * num + mFeedbackRating.getRating()) / num;
                 organization.child("Rating").setValue(String.valueOf(newRating));
                 organization.child("Num").setValue(String.valueOf(num));
-                organization.child("Review").child(String.valueOf(num)).setValue(mFeedbackText.getText());
+                organization.child("Feedback").child(String.valueOf(num)).setValue(mFeedbackText.getText());
                 finish();
             }
         });
