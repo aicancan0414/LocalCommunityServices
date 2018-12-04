@@ -44,7 +44,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             // Display a Toast message indicting the selected item
             Intent intent = new Intent(view.getContext(), StudentDescription.class );
             intent.putExtra("project", mTitle.getText());
-
             view.getContext().startActivity(intent);
 
 
