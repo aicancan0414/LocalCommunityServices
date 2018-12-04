@@ -75,7 +75,7 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 for(DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
-                    if(dataSnapshot2.getKey().equals("description")) {
+                    if(dataSnapshot2.getKey().equals("org")) {
                         list.add(new OpportunityListItem(dataSnapshot.getKey(), dataSnapshot2.getValue().toString()));
                     }
                 }
