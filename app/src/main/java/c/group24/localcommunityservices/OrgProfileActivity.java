@@ -79,7 +79,6 @@ public class OrgProfileActivity extends Activity {
             infoView.setVisibility(View.GONE);
         else
             infoView.setVisibility(View.VISIBLE);
-
         /*
         if (map.get("Rating").equals("")) {
             ratingView.setVisibility(View.GONE);
