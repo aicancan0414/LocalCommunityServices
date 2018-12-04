@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+public class FeedbackAdapter extends RecyclerView.Adapter<FeedbackAdapter.MyViewHolder> {
 
     private ArrayList<OpportunityListItem> mDataset;
 
@@ -42,8 +44,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         public void onClick(View view) {
             //System.out.println("HEREHEHEHEHEHEHEH");
             // Display a Toast message indicting the selected item
-            Intent intent = new Intent(view.getContext(), StudentDescription.class );
-            intent.putExtra("project", mTitle.getText());
+            Intent intent = new Intent(view.getContext(), FeedbackActivity.class );
+            intent.putExtra("UID", FirebaseAuth.getInstance().getCurrentUser().getUid());
+
             view.getContext().startActivity(intent);
 
 
@@ -53,13 +56,13 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public MyAdapter(ArrayList<OpportunityListItem> myDataset) {
+    public FeedbackAdapter(ArrayList<OpportunityListItem> myDataset) {
         mDataset = myDataset;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public MyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
+    public FeedbackAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent,
                                                      int viewType) {
         //System.out.println("HEREHEHEHEHEHEHEH");
         // create a new view

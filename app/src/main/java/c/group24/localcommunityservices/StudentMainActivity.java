@@ -85,6 +85,9 @@ public class StudentMainActivity extends AppCompatActivity
         //fragment = new ProfileFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
+        setTitle("Opportunities");
+
+
 
     }
 
@@ -150,6 +153,9 @@ public class StudentMainActivity extends AppCompatActivity
             //getSupportFragmentManager().beginTransaction().add(R.id.container, fragment).commit();
 
         } else if (id == R.id.nav_pastevents) {
+            fragment = new PastEventsFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+
 
 
         } else if(id == R.id.nav_futureevents) {
