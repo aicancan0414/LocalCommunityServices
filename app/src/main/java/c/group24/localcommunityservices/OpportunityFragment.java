@@ -107,11 +107,13 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
                         //System.out.println("HERE");
                         Map<String, String> students = (Map<String, String>) dataSnapshot.getValue();
                         ArrayList<OpportunityListItem> items = new ArrayList<>(list);
-                        for(String key : students.keySet()) {
-                            if(key.equals(userID)) {
-                                for(OpportunityListItem item : items) {
-                                    if(item.title.equals(title)) {
-                                        list.remove(item);
+                        if(students != null) {
+                            for (String key : students.keySet()) {
+                                if (key.equals(userID)) {
+                                    for (OpportunityListItem item : items) {
+                                        if (item.title.equals(title)) {
+                                            list.remove(item);
+                                        }
                                     }
                                 }
                             }
