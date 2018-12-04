@@ -41,7 +41,7 @@ public class EditOrganizationActivity extends Activity{
 
 
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("Student");
+        databaseReference = firebaseDatabase.getReference("Organization");
         firebaseAuth = FirebaseAuth.getInstance();
         user = firebaseAuth.getCurrentUser();
         userID = user.getUid();
