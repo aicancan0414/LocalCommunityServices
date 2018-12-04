@@ -5,21 +5,26 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.Map;
 
 public class AddOpsActivity extends AppCompatActivity {
 
@@ -38,6 +43,9 @@ public class AddOpsActivity extends AppCompatActivity {
     private DatabaseReference organization;
     private DatabaseReference project;
     private String UID;
+
+    private Opportunity opportunity = new Opportunity();
+    private String mOrg, mEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,10 @@ public class AddOpsActivity extends AppCompatActivity {
 
         setDefaultDate();
 
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        organization = firebaseDatabase.getReference("Organization");
+        project = firebaseDatabase.getReference("Projects");
+
         final Button datePickerButton = findViewById(R.id.opsDateButton);
         datePickerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,15 +82,35 @@ public class AddOpsActivity extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firebaseDatabase = FirebaseDatabase.getInstance();
-                organization = firebaseDatabase.getReference("Organization");
-                project = firebaseDatabase.getReference("Projects");
-                UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-                Opportunity opportunity = new Opportunity();
-                opportunity.setOrg(organization.child(UID).child("Name").toString());
+                //UID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                UID = "EJ4sDWRJh8TaesIr07BdshGD4Fu1";
+
+                organization.child(UID).addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                        Map<String, String> map = (Map<String, String>) dataSnapshot.getValue();
+                        mOrg = map.get("Name");
+                        mEmail = map.get("Email");
+                        opportunity.setOrg(mOrg);
+                        opportunity.setContact(mEmail);
+                        Toast.makeText(AddOpsActivity.this, mEmail, Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                //Toast.makeText(AddOpsActivity.this, mEmail,Toast.LENGTH_LONG).show();
+                //opportunity.setOrg(organization.child(UID).child("Name").toString());
+
                 opportunity.setOrgID(UID);
-                opportunity.setContact(organization.child(UID).child("Email").toString());
+                //opportunity.setContact(organization.child(UID).child("Email").toString());
+
                 opportunity.setDate(mDateString);
                 opportunity.setLocation(mLocationText.getText().toString());
                 opportunity.setDescription(mDescriptionText.getText().toString());

@@ -30,7 +30,7 @@ public class PastEventsFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private ArrayList<Opportunity> list = new ArrayList<>();
+    private ArrayList<OpportunityListItem> list = new ArrayList<>();
 
     private DatabaseReference student;
     private String UID;
@@ -42,7 +42,7 @@ public class PastEventsFragment extends Fragment {
         mRecyclerView = view.findViewById(R.id.writeFeedback);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         populateList();
-        mAdapter = new EventAdapter(list);
+        mAdapter = new FeedbackAdapter(list);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         setHasOptionsMenu(true);
@@ -69,7 +69,7 @@ public class PastEventsFragment extends Fragment {
                     int month = Integer.parseInt(date.substring(5, 7));
                     int day = Integer.parseInt(date.substring(8));
                     if (year < y || (year == y && month < m) || (year == y && month == m && day < d)) {
-                        list.add(opportunity);
+                        list.add(new OpportunityListItem("", opportunity.getDescription(), opportunity.getOrgID()));
                     }
                 }
             }
@@ -79,75 +79,6 @@ public class PastEventsFragment extends Fragment {
 
             }
         });
-    }
-
-    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        // each data item is just a string in this case
-
-        public CardView cv;
-        public TextView mTitle;
-        public TextView mDescription;
-        public MyViewHolder(View v) {
-            super(v);
-
-
-            cv = (CardView)itemView.findViewById(R.id.cv);
-
-            mTitle = (TextView) itemView.findViewById(R.id.opportunity_title);
-            mDescription = (TextView) itemView.findViewById(R.id.opportunity_description);
-            cv.setOnClickListener(this);
-        }
-
-        @Override
-        public void onClick(View view) {
-
-            //Opportunity opportunity = list.remove(getAdapterPosition());
-        }
-    }
-
-    public class EventAdapter extends RecyclerView.Adapter<MyViewHolder> {
-
-        private ArrayList<Opportunity> mDataset;
-
-        // Provide a reference to the views for each data item
-        // Complex data items may need more than one view per item, and
-        // you provide access to all the views for a data item in a view holder
-
-
-        // Provide a suitable constructor (depends on the kind of dataset)
-        public EventAdapter(ArrayList<Opportunity> myDataset) {
-            mDataset = myDataset;
-        }
-
-        // Create new views (invoked by the layout manager)
-        @Override
-        public MyViewHolder onCreateViewHolder(ViewGroup parent,
-                                                            int viewType) {
-            //System.out.println("HEREHEHEHEHEHEHEH");
-            // create a new view
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_item_layout, parent, false);
-
-            MyViewHolder vh = new MyViewHolder(v);
-            return vh;
-        }
-
-        // Replace the contents of a view (invoked by the layout manager)
-        @Override
-        public void onBindViewHolder(MyViewHolder holder, int position) {
-            // - get element from your dataset at this position
-            // - replace the contents of the view with that element
-            holder.mDescription.setText(mDataset.get(position).description);
-
-            //holder.mTextView.setText(mDataset.get(position));
-
-        }
-
-        // Return the size of your dataset (invoked by the layout manager)
-        @Override
-        public int getItemCount() {
-            return mDataset.size();
-        }
-
     }
 
 }

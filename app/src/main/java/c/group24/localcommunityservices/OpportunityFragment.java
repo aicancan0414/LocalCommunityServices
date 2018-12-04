@@ -77,7 +77,7 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
                 //System.out.println("IN ADD CHILD EVENT LISTENER");
                 Opportunity opp = dataSnapshot.getValue(Opportunity.class);
                 String description = opp.getDescription();
-                list.add(new OpportunityListItem(dataSnapshot.getKey(), description));
+                list.add(new OpportunityListItem(dataSnapshot.getKey(), description, ""));
                 //mAdapter.notifyItemInserted(list.size()-1);
                 mAdapter.notifyDataSetChanged();
 
