@@ -73,16 +73,9 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
         mDatabaseRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                //System.out.println("IN ADD CHILD EVENT LISTENER");
-                Opportunity opp = dataSnapshot.getValue(Opportunity.class);
-                String description = opp.getDescription();
-                list.add(new OpportunityListItem(dataSnapshot.getKey(), description, ""));
-                //mAdapter.notifyItemInserted(list.size()-1);
-                mAdapter.notifyDataSetChanged();
-
                 for(DataSnapshot dataSnapshot2 : dataSnapshot.getChildren()) {
                     if(dataSnapshot2.getKey().equals("org")) {
-                        list.add(new OpportunityListItem(dataSnapshot.getKey(), dataSnapshot2.getValue().toString(), ""));
+                        list.add(new OpportunityListItem(dataSnapshot.getKey(), dataSnapshot2.getValue().toString(), "test"));
                     }
                 }
                 ArrayList<OpportunityListItem> items = new ArrayList<OpportunityListItem>(list);
@@ -111,7 +104,7 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
                 mDatabaseRef.child(dataSnapshot.getKey()).child("students").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        System.out.println("HERE");
+                        //System.out.println("HERE");
                         Map<String, String> students = (Map<String, String>) dataSnapshot.getValue();
                         ArrayList<OpportunityListItem> items = new ArrayList<>(list);
                         for(String key : students.keySet()) {
