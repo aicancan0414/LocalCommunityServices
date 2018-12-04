@@ -65,7 +65,7 @@ public class OrganizationAdapter extends BaseExpandableListAdapter{
                         final String uidStr = auth.getCurrentUser().getUid();
                         String emailStr = auth.getCurrentUser().getEmail();
                         final String proj_name = headerItem.get(groupPosition);
-                        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("Taken projects and members").child(proj_name);
+                        final DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Organization").child(uidStr).child("Offered Projects").child(proj_name);
                         DatabaseReference ref3 = FirebaseDatabase.getInstance().getReference().child("Projects").child(proj_name);
                         ref.child(uidStr).setValue(emailStr);
                         DatabaseReference ref2 = FirebaseDatabase.getInstance().getReference();

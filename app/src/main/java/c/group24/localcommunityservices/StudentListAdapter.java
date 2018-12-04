@@ -1,37 +1,24 @@
 package c.group24.localcommunityservices;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Button;
 import android.widget.TextView;
-
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import android.content.Intent;
 
-public class OrgOppAdpterTest extends BaseExpandableListAdapter {
+public class StudentListAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> headerItem;
     private HashMap<String, List<String>> childItem;
 
 
-    public OrgOppAdpterTest(Context context, List<String> headerItem, HashMap<String, List<String>> childItem) {
+    public StudentListAdapter(Context context, List<String> headerItem, HashMap<String, List<String>> childItem) {
         this.context = context;
         this.headerItem = headerItem;
         this.childItem = childItem;
@@ -50,39 +37,12 @@ public class OrgOppAdpterTest extends BaseExpandableListAdapter {
     @Override
     public View getChildView(final int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        Log.e("test","8");
         String childText = (String) getChild(groupPosition, childPosition);
 
         LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-
-        if(!isLastChild){
-
-            convertView = inflater.inflate(R.layout.list_item, null);
-            Log.i("Lastlines",Integer.toString(childPosition));
-
-        }else{
-            convertView = inflater.inflate(R.layout.list_item_with_button, null);
-            Button studentList = convertView.findViewById(R.id.myButton);
-            studentList.setFocusable(false);
-            final String proj_name = headerItem.get(groupPosition);
-
-
-
-            studentList.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent i=new Intent(view.getContext(), StudentList.class);
-                    i.putExtra("uid",proj_name);
-                    context.startActivity(i);
-                }
-            });
-
-
-        }
-
-
+        convertView = inflater.inflate(R.layout.list_item, null);
+        Log.i("Lastlines",Integer.toString(childPosition));
 
 
         TextView tv = convertView.findViewById(R.id.lblListItem);
@@ -119,16 +79,7 @@ public class OrgOppAdpterTest extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.list_group, null);
-
-
-
-
-
         }
-
-
-
-
         TextView tv = convertView.findViewById(R.id.lblListHeader);
         tv.setText(headerTitle);
         return convertView;

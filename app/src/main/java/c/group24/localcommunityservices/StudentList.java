@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.ImageButton;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -20,12 +19,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class OrganizationOppurtunityList extends Activity {
+public class StudentList extends Activity {
 
     ExpandableListView expandableListView;
     ///OrganizationAdapter customExpandableListViewAdapter;
 
-    OrgOppAdpterTest customExpandableListViewAdapter;
+    StudentListAdapter customExpandableListViewAdapter;
     List<String> listDataHeader;
     HashMap<String, List<String>> listDataChild;
 
@@ -35,7 +34,9 @@ public class OrganizationOppurtunityList extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.organization_oppurtunity_list);
+        setContentView(R.layout.student_list);
+        Intent j = getIntent();
+        String proj_name = j.getStringExtra("uid");
 
         database = FirebaseDatabase.getInstance();
         FirebaseAuth auth=FirebaseAuth.getInstance();
@@ -44,34 +45,27 @@ public class OrganizationOppurtunityList extends Activity {
         Log.e("uid","hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         Log.e("uid", uidStr );
 
-        myRef = database.getReference("Organization").child(uidStr).child("Offered Projects");
+        myRef = FirebaseDatabase.getInstance().getReference("Organization").child(uidStr).child("Offered Projects").child(proj_name).child("student");
 
 
         Log.e("test","1");
 
         expandableListView = findViewById(R.id.lvExp);
         SetStandardGroups();
-        customExpandableListViewAdapter = new OrgOppAdpterTest(this, listDataHeader, listDataChild);
+        customExpandableListViewAdapter = new StudentListAdapter(this, listDataHeader, listDataChild);
         expandableListView.setAdapter(customExpandableListViewAdapter);
-        Button post = findViewById(R.id.button4);
-        Log.e("test","2");
 
-        post.setOnClickListener(new View.OnClickListener() {
+        Button goback = findViewById(R.id.buttona);
+        goback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(OrganizationOppurtunityList.this,  AddOpsActivity.class    );////////////
+                Intent i = new Intent(StudentList.this,OrganizationOppurtunityList.class);
                 startActivity(i);
             }
         });
 
-        Button editProf = findViewById(R.id.profile);
-        editProf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(OrganizationOppurtunityList.this,EditOrganizationActivity.class);
-                startActivity(i);
-            }
-        });
+
+
 
 
 

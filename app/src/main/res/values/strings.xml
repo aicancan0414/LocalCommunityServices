@@ -35,4 +35,6 @@
     <string name="orgOppPost">Post Opportunity</string>
     <string name="orgCurrentOpp">Offered Opportunities</string>
     <string name="orgpProfile">Profile</string>
+    <string name="goback">Go Back</string>
+    <string name="studentlist">Student List</string>
 </resources>
