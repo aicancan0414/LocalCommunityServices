@@ -83,11 +83,13 @@ public class PastEventsFragment extends Fragment {
 
                             }
                         });
-                        int year = Integer.parseInt(date.substring(0, 4));
-                        int month = Integer.parseInt(date.substring(5, 7));
-                        int day = Integer.parseInt(date.substring(8));
-                        if (year < y || (year == y && month < m) || (year == y && month == m && day < d)) {
-                            list.add(new OpportunityListItem(proj, description, orgID));
+                        if (date != null) {
+                            int year = Integer.parseInt(date.substring(0, 4));
+                            int month = Integer.parseInt(date.substring(5, 7));
+                            int day = Integer.parseInt(date.substring(8));
+                            if (year < y || (year == y && month < m) || (year == y && month == m && day < d)) {
+                                list.add(new OpportunityListItem(proj, description, orgID));
+                            }
                         }
                     }
                 }
