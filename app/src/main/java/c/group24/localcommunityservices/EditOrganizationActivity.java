@@ -80,6 +80,7 @@ public class EditOrganizationActivity extends Activity{
                 databaseReference.child(userID).child("Description").setValue(infoView.getText().toString());
                 databaseReference.child(userID).child("Address").setValue(addressView.getText().toString());
                 databaseReference.child(userID).child("Email").setValue(emailView.getText().toString());
+                onBackPressed();
             }
         });
     }
