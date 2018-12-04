@@ -108,6 +108,7 @@ public class StudentDescription extends Activity {
                 if (map!= null) {
                     //volunteer.setText(map.get("Name"));
                     projectDatabase.child(project).child("students").child(userID).setValue(map.get("Name"));
+                    studentDatabase.child(userID).child("Opportunities").child(project).setValue(project);
                 }
             }
 
