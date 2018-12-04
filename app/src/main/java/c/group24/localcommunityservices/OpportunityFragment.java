@@ -150,6 +150,8 @@ public class OpportunityFragment extends Fragment implements SearchView.OnQueryT
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         MenuItem searchItem = menu.findItem(R.id.action_search);
         MenuItem actionSetting = menu.findItem(R.id.action_settings);
+        MenuItem editProfile = menu.findItem(R.id.editProfile);
+        editProfile.setVisible(false);
         searchItem.setVisible(true);
         actionSetting.setVisible(false);
         SearchView searchView = (SearchView) searchItem.getActionView();
